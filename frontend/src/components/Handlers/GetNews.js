@@ -1,13 +1,15 @@
 // ./Handlers/GetNews.js
 import axios from 'axios';
 
-export const fetchNearbyNews = async (lat, lon, range = 5) => {
+export const fetchNearbyNews = async (lat, lon, range = 5, page = 1, limit = 10) => {
   try {
     const res = await axios.get('http://localhost:8000/api/news/nearby', {
       params: {
         latitude: lat,
         longitude: lon,
-        range, // send range to the backend
+        range,
+        page,
+         limit  // send range to the backend
       },
     });
     return res.data;

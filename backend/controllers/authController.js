@@ -8,21 +8,23 @@ const generateToken = (user) => {
 
 exports.register = async (req, res) => {
   const { username, password, email } = req.body;
+  const profilePic = req.file ? req.file.filename : null;
+
   try {
     const existing = await User.findOne({ $or: [{ username }, { email }] });
     if (existing) {
       return res.status(400).json({ message: 'Username or email already exists' });
     }
 
-    const user = new User({ username, password, email });
+    const user = new User({ username, password, email, profilePic });
     await user.save();
 
     const token = generateToken(user);
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false, // ✅ Set to true in production
-      sameSite: 'Lax', // ✅ Or 'None' if using cross-site
+      secure: false,
+      sameSite: 'Lax',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -32,6 +34,7 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: 'Error registering user' });
   }
 };
+
 
 
 exports.login = async (req, res) => {

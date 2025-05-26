@@ -7,19 +7,26 @@ function Login() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [isRegister, setIsRegister] = useState(false);
+  const [image, setImage] = useState(null); // New state
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (isRegister) {
-        await register(username, password, email);
-      } else {
-        await login(username, password);
-      }
-    } catch (err) {
-      alert(err.response?.data?.message || 'Error occurred');
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    if (isRegister) {
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
+      formData.append('email', email);
+      if (image) formData.append('profilePic', image);
+
+      await register(formData);
+    } else {
+      await login(username, password);
     }
-  };
+  } catch (err) {
+    alert(err.response?.data?.message || 'Error occurred');
+  }
+};
 
   return (
     <div>
@@ -42,6 +49,21 @@ function Login() {
             placeholder="Email"
             required
           />
+
+          
+
+        )}
+
+        {isRegister && (
+          <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+              className="w-full"
+            />
+
+          
+
         )}
 
         <input

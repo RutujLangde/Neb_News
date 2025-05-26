@@ -38,16 +38,16 @@ function MyPosts() {
   }, [user, currUser]);
 
   const handleDelete = async (postId) => {
-  try {
-    await axios.delete(`http://localhost:8000/api/news/${postId}`, {
-      withCredentials: true,
-    });
-    setPosts(posts.filter((post) => post._id !== postId));
-  } catch (err) {
-    alert('Error deleting post');
-    console.error(err);
-  }
-};
+    try {
+      await axios.delete(`http://localhost:8000/api/news/${postId}`, {
+        withCredentials: true,
+      });
+      setPosts(posts.filter((post) => post._id !== postId));
+    } catch (err) {
+      alert('Error deleting post');
+      console.error(err);
+    }
+  };
 
 
   const handleEdit = (postId) => {
@@ -57,7 +57,64 @@ function MyPosts() {
   return (
     <div style={{ padding: '1rem' }}>
       <h2>My Posts</h2>
-      {posts.length === 0 ? (
+
+      {posts.length > 0 ? (
+        <ul className="space-y-4">
+          {posts.map((news, index) => (
+            <li
+              key={index}
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4"
+            >
+              {news.imageUrl && (
+                <img
+                  src={`http://localhost:8000/${news.imageUrl}`}
+                  alt="News"
+                  className="w-full max-h-64 object-cover rounded-md mb-2"
+                />
+              )}
+              <h4 className="font-bold">{news.title}</h4>
+              <p className="text-gray-600 dark:text-gray-300 mt-1">{news.description}</p>
+              <div className="flex items-center mt-2">
+                <button
+                  onClick={() => handleLike(news._id)}
+                  className="text-blue-500 hover:text-blue-700 font-semibold mr-2"
+                >
+                  👍 Like
+                </button>
+                <span>{news.likes.length} likes</span>
+
+
+
+              </div>
+
+              <p>     .</p>
+
+              <button
+                onClick={() => handleEdit(post._id)}
+                style={{ marginRight: '1rem', backgroundColor: 'orange', color: 'white', border: 'none', padding: '0.5rem' }}
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => handleDelete(post._id)}
+                style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '0.5rem' }}
+              >
+                Delete
+              </button>
+
+
+
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-500 mt-4 text-center">No nearby news available.</p>
+      )}
+
+
+
+      {/* {posts.length === 0 ? (
         <p>No posts yet.</p>
       ) : (
         posts.map(post => (
@@ -80,7 +137,7 @@ function MyPosts() {
             </button>
           </div>
         ))
-      )}
+      )} */}
     </div>
   );
 }

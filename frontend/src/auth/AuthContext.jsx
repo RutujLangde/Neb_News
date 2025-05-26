@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  
 
   useEffect(() => {
   axios.get('http://localhost:8000/api/auth/me', {
@@ -25,18 +26,22 @@ export const AuthProvider = ({ children }) => {
     setUser({ username });
   };
 
-  const register = async (username, password, email) => {
+ const register = async (formData) => {
   try {
-    const res = await axios.post('http://localhost:8000/api/auth/register', { username, password, email },{
-  withCredentials: true ,
-});
+    const res = await axios.post('http://localhost:8000/api/auth/register', formData, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     localStorage.setItem('token', res.data.token);
-    setUser({ username });
+    setUser({ username: formData.get('username'), profilePic: res.data.profilePic });
   } catch (err) {
     console.error('Registration error:', err.response?.data || err.message);
     throw err;
   }
 };
+
 
 
 
