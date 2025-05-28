@@ -22,7 +22,6 @@ function MyPosts() {
     const fetchPosts = async () => {
       try {
         const userId = user?._id || currUser?._id;
-        console.log(userId, "hey");
         if (!userId) return;
 
         const res = await axios.get(`http://localhost:8000/api/user/${userId}`, {
@@ -57,7 +56,7 @@ function MyPosts() {
   return (
     <div style={{ padding: '1rem' }}>
       <h2>My Posts</h2>
-
+    <div className='w-[60vw]'>
       {posts.length > 0 ? (
         <ul className="space-y-4">
           {posts.map((news, index) => (
@@ -87,7 +86,7 @@ function MyPosts() {
 
               </div>
 
-              <p>     .</p>
+              <p></p>
 
               <button
                 onClick={() => handleEdit(post._id)}
@@ -97,7 +96,7 @@ function MyPosts() {
               </button>
 
               <button
-                onClick={() => handleDelete(post._id)}
+                onClick={() => handleDelete(news._id)}
                 style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '0.5rem' }}
               >
                 Delete
@@ -111,6 +110,8 @@ function MyPosts() {
       ) : (
         <p className="text-gray-500 mt-4 text-center">No nearby news available.</p>
       )}
+
+      </div>
 
 
 

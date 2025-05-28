@@ -16,6 +16,9 @@ const AppRoutes = () => {
       <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
       <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" />} />
       <Route path="/myposts" element={user ? <MyPosts /> : <Navigate to="/login" />} />
+      <Route path="/login/new" element={user ? <Home /> : <Navigate to="/login" />} />
+
+
     </Routes>
   );
 };

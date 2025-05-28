@@ -222,6 +222,13 @@ app.get('/api/forward-geocode', async (req, res) => {
 })
 
 
+// Node.js + Express example
+app.post('/api/logout', async(req, res) => {
+  await res.clearCookie('token'); // Name of your cookie
+  res.status(200).json({ message: 'Logged out successfully' });
+});
+
+
 
 
 const PORT = process.env.PORT || 5000;

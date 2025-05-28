@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getLocation } from '../Handlers/Getlocation';
-import { fetchNearbyNews } from '../Handlers/GetNews';
-import { getCurrentUser } from '../../utils/api';
+import { getLocation } from './Handlers/Getlocation';
+import { fetchNearbyNews } from './Handlers/GetNews';
+import { getCurrentUser } from './../utils/api';
 import { useNavigate } from 'react-router-dom';
 // import {  Navigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -10,10 +10,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 
 
-import locationIcon from '../../assets/icons/location icon.png'
-import SideBar from '../SideBar';
+import locationIcon from './../assets/icons/location icon.png'
 
-const Home = () => {
+const SideBar = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
@@ -322,8 +321,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white  flex-col md:flex-row">
-      {/* Sidebar */}
+    
       <div className="ml-[3vw]  h-[90vh] transform translate-y-10 rounded-2xl md:block md:w-2/9 bg-white dark:bg-gray-800 p-4 flex flex-col justify-between align-middle  sticky top-0 border border-gray-200 dark:border-gray-700 ">
         <div className='mt-[6vh]'>
           <img
@@ -407,109 +405,9 @@ const Home = () => {
 
         
       </div>
-
-      {/* <SideBar /> */}
-      {/* Main Content */}
-      <div className=" flex-1 w-full md:w-4/5 lg:w-3/5 p-4 md:p-6 overflow-y-auto mx-auto">
-        <div className=" lg:mx-[10vw] sm:mx-0.5 md:mx-0.5">
-          <h2 className="text-lg font-semibold mb-4 text-center">Post News</h2>
-
-          <form  onSubmit={handleSubmit} className= " border border-gray-200 dark:border-gray-700 dark:bg-gray-800 space-y-2 p-3.5 rounded-2xl">
-            <input
-              type="text"
-              placeholder="News Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 bg-gray-100 dark:bg-gray-700 rounded-2xl"
-            />
-            <textarea
-              placeholder="News Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 bg-gray-100 dark:bg-gray-700 rounded-2xl"
-              rows={3}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
-              className="w-full"
-            />
-
-            <div className="flex">
-              <input
-                type="text"
-                placeholder="Address (optional)"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full p-2 bg-gray-100 dark:bg-gray-700 rounded-2xl mr-3"
-              />
-              <button
-                type="button"
-                onClick={handleGetLocation}
-                className="bg-blue-500 w-[25%] hover:bg-blue-600 text-white py-2 px-4 rounded-2xl"
-              >
-                📍 Get Location
-              </button>
-            </div>
-
-            <button
-              type="submit"
-              className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded-full font-semibold"
-            >
-              Post News 📤
-            </button>
-          </form>
-
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold my-6 text-center">Nearby News</h2>
-            {nearbyNews.length > 0 ? (
-              <ul className="space-y-4">
-                {nearbyNews.map((news, index) => (
-                  <li
-                    key={index}
-                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4"
-                  >
-                    {news.imageUrl && (
-                      <img
-                        src={`http://localhost:8000/${news.imageUrl}`}
-                        alt="News"
-                        className="w-full max-h-64 object-cover rounded-md mb-2"
-                      />
-                    )}
-                    <h4 className="font-bold">{news.title}</h4>
-                    <p className="text-gray-600 dark:text-gray-300 mt-1">{news.description}</p>
-                    <div className="flex items-center mt-2">
-                      <button
-                        onClick={() => handleLike(news._id)}
-                        className="text-blue-500 hover:text-blue-700 font-semibold mr-2"
-                      >
-                        👍 Like
-                      </button>
-                      <span>{news.likes.length} likes</span>
-
-
-
-                    </div>
-
-                    <p className="text-gray-600 dark:text-gray-300 mt-1">Author : {news.userName}</p>
-                    <p className="text-gray-600 dark:text-gray-300 mt-1">
-                      Posted at: {new Date(news.createdAt).toLocaleString()}
-                    </p>
-
-
-
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500 mt-4 text-center">No nearby news available.</p>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+     
+      
   );
 };
 
-export default Home;
+export default SideBar;
