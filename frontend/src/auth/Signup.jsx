@@ -5,12 +5,12 @@ function SignUp() {
   const { register } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState(''); // ✅ Add email state
+  const [email, setEmail] = useState(''); 
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await register(username, password, email); // ✅ Include email
+      await register(username, password, email); 
     } catch (err) {
       alert(err.response?.data?.message || 'Registration failed');
     }

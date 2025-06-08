@@ -12,6 +12,9 @@ export const fetchNearbyNews = async (lat, lon, range = 5, page = 1, limit = 10)
          limit  // send range to the backend
       },
     });
+
+    console.log(res.data);
+    
     return res.data;
   } catch (err) {
     console.error('Error fetching nearby news:', err);
